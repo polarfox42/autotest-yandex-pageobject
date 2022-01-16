@@ -26,9 +26,15 @@ class BasePage(object):
         TODO: выпилить и заменить на простой find_element(s) """
         try:
             self.find_element(locator, time)
+        except TimeoutException:
+            return False
         except NoSuchElementException:
             return False
         return True
 
     def click_enter_on_element(self, locator):
         self.find_element(locator).send_keys(Keys.ENTER)
+
+    def wait_for_new_window(self, number=2, time=10):
+        return WebDriverWait(self.driver, time).until(EC.number_of_windows_to_be(number),
+                                                      message="Number of tabs didn't change")

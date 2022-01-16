@@ -20,7 +20,7 @@ class YandexSearchPage(BasePage):
             "There's no search field on the page"
 
     def can_see_suggest(self):
-        assert self.is_element_present(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_SUGGEST, time=30), \
+        assert self.is_element_present(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_SUGGEST), \
             "The suggest didn't appear"
 
     def click_enter_on_search_field(self):

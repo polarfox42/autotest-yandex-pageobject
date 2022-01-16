@@ -9,7 +9,7 @@ class YandexSearchLocators:
 
 class YandexImagesLocators:
     LOCATOR_YANDEX_IMAGES_PAGE_LINK = (By.CSS_SELECTOR, '[data-id="images"]')
-    LOCATOR_YANDEX_IMAGES_FIRST_POPULAR_REQUEST_ITEM = (By.CLASS_NAME, "PopularRequestList-Item_pos_0")
+    LOCATOR_YANDEX_IMAGES_FIRST_POPULAR_REQUEST_ITEM = (By.CSS_SELECTOR, ".PopularRequestList-Item_pos_0>.Link")
     LOCATOR_YANDEX_IMAGES_SEARCH_FIELD = (By.NAME, "text")
     LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM = (By.CLASS_NAME, "serp-item_pos_0")
     LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE = (By.CLASS_NAME, "MMImage-Origin")
