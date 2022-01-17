@@ -27,12 +27,11 @@ class YandexImagesPage(BasePage):
                                                             f"got {self.driver.current_url}"
 
     def open_first_category(self):
-        # TODO: исправить нажатие
         category = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_POPULAR_REQUEST_ITEM)
         category_text = category.text
         category.click()
-        title = self.driver.title
-        assert category_text in title, f"Wrong request text. Expected {category_text}, got {title}"
+        search_text = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_SEARCH_FIELD).get_attribute('value')
+        assert category_text == search_text, f"Wrong request text. Expected {category_text}, got {search_text}"
 
     def open_first_image(self):
         image = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM)
