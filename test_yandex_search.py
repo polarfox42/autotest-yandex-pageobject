@@ -8,7 +8,6 @@ REQUEST = "Тензор"
 LINK = "tensor.ru"
 
 
-@pytest.mark.skip
 def test_yandex_search(browser):
     page = YandexSearchPage(browser)
     page.go_to_site()
@@ -28,5 +27,5 @@ def test_yandex_images(browser):
     page.check_current_url()
     page.open_first_category()
     page.open_first_image()
-    # page.click_next()
-    # page.click_prev()
+    page.click_next()
+    page.click_prev()

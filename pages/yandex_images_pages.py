@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 from pages.locators import YandexImagesLocators
+import json
+import urllib
 
 
 class YandexImagesPage(BasePage):
@@ -7,6 +9,7 @@ class YandexImagesPage(BasePage):
     def __init__(self, driver):
         super(YandexImagesPage, self).__init__(driver)
         self.default_url = "https://yandex.ru/images/?utm_source=main_stripe_big"
+        self.first_image = None
 
     def can_see_images_link(self):
         assert self.is_element_present(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_LINK), \
@@ -35,5 +38,25 @@ class YandexImagesPage(BasePage):
 
     def open_first_image(self):
         image = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM)
+        data = json.loads(self.find_element(
+            YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM).get_attribute('data-bem'))
+        image_title = urllib.parse.unquote(data['serp-item']['snippet']['title'].strip())
         image.click()
-        # TODO: Проверить, что открылась
+        image_page_theme = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_THEME).text
+        assert image_title == image_page_theme, f"Wrong page. Expected {image_title}, got {image_page_theme}"
+
+    def click_next(self):
+        self.first_image = self.find_element(
+            YandexImagesLocators.LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE).get_attribute('src')
+        next_button = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_BUTTON_NEXT)
+        next_button.click()
+        new_image = self.find_element(
+            YandexImagesLocators.LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE).get_attribute('src')
+        assert self.first_image != new_image, "Image didn't change"
+
+    def click_prev(self):
+        prev_button = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_BUTTON_PREV)
+        prev_button.click()
+        image = self.find_element(
+            YandexImagesLocators.LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE).get_attribute('src')
+        assert image == self.first_image, "Images don't match"
