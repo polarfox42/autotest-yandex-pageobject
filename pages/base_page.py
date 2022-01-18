@@ -1,6 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import json
 
 
 class BasePage(object):
@@ -26,3 +27,11 @@ class BasePage(object):
     def wait_for_new_window(self, number=2, time=10):
         return WebDriverWait(self.driver, time).until(EC.number_of_windows_to_be(number),
                                                       message="Number of tabs didn't change")
+
+    @staticmethod
+    def json_to_dict(data):
+        return json.loads(data)
+
+    @staticmethod
+    def quote_to_symbol(text):
+        return text.replace("&quot;", '"')

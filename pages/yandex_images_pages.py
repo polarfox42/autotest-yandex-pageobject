@@ -1,7 +1,5 @@
 from pages.base_page import BasePage
 from pages.locators import YandexImagesLocators
-import json
-import urllib
 
 
 class YandexImagesPage(BasePage):
@@ -38,9 +36,9 @@ class YandexImagesPage(BasePage):
 
     def open_first_image(self):
         image = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM)
-        data = json.loads(self.find_element(
+        data = self.json_to_dict(self.find_element(
             YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM).get_attribute('data-bem'))
-        image_title = data['serp-item']['snippet']['title'].strip().replace("&quot;", '"')
+        image_title = self.quote_to_symbol(data['serp-item']['snippet']['title'].strip())
         image.click()
         image_page_theme = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_THEME).text
         assert image_title == image_page_theme, f"Wrong page. Expected {image_title}, got {image_page_theme}"
