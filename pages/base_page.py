@@ -1,4 +1,3 @@
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -20,17 +19,6 @@ class BasePage(object):
     def find_elements(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f"Can't find elements by locator {locator}.")
-
-    def is_element_present(self, locator, time=10):
-        """ Бесполезная хрень. Ошибка все равно выводится из find_element(s)
-        TODO: выпилить и заменить на простой find_element(s) """
-        try:
-            self.find_element(locator, time)
-        except TimeoutException:
-            return False
-        except NoSuchElementException:
-            return False
-        return True
 
     def click_enter_on_element(self, locator):
         self.find_element(locator).send_keys(Keys.ENTER)

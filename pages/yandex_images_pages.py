@@ -12,7 +12,7 @@ class YandexImagesPage(BasePage):
         self.first_image = None
 
     def can_see_images_link(self):
-        assert self.is_element_present(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_LINK), \
+        assert self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_LINK), \
             "There's no link to Yandex.Images on the page"
 
     def click_images_link(self):
@@ -57,6 +57,7 @@ class YandexImagesPage(BasePage):
     def click_prev(self):
         prev_button = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_BUTTON_PREV)
         prev_button.click()
+
         image = self.find_element(
             YandexImagesLocators.LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE).get_attribute('src')
         assert image == self.first_image, "Images don't match"

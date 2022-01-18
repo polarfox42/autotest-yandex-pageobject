@@ -16,18 +16,18 @@ class YandexSearchPage(BasePage):
         return links_from_results
 
     def can_see_search_field(self):
-        assert self.is_element_present(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_FIELD), \
+        assert self.find_element(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_FIELD), \
             "There's no search field on the page"
 
     def can_see_suggest(self):
-        assert self.is_element_present(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_SUGGEST), \
+        assert self.find_element(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_SUGGEST), \
             "The suggest didn't appear"
 
     def click_enter_on_search_field(self):
         self.click_enter_on_element(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_FIELD)
 
     def can_see_search_results(self):
-        assert self.is_element_present(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_RESULTS), \
+        assert self.find_element(YandexSearchLocators.LOCATOR_YANDEX_SEARCH_RESULTS), \
             "The search results didn't appear"
 
     def got_link_in_top_5(self, link):
