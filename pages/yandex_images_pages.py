@@ -40,7 +40,7 @@ class YandexImagesPage(BasePage):
         image = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM)
         data = json.loads(self.find_element(
             YandexImagesLocators.LOCATOR_YANDEX_IMAGES_FIRST_FOUND_ITEM).get_attribute('data-bem'))
-        image_title = urllib.parse.unquote(data['serp-item']['snippet']['title'].strip())
+        image_title = data['serp-item']['snippet']['title'].strip().replace("&quot;", '"')
         image.click()
         image_page_theme = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_PAGE_THEME).text
         assert image_title == image_page_theme, f"Wrong page. Expected {image_title}, got {image_page_theme}"
@@ -57,7 +57,6 @@ class YandexImagesPage(BasePage):
     def click_prev(self):
         prev_button = self.find_element(YandexImagesLocators.LOCATOR_YANDEX_IMAGES_BUTTON_PREV)
         prev_button.click()
-
         image = self.find_element(
             YandexImagesLocators.LOCATOR_YANDEX_IMAGES_ORIGINAL_IMAGE).get_attribute('src')
         assert image == self.first_image, "Images don't match"
